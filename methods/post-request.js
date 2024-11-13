@@ -8,9 +8,8 @@ module.exports = async (req, res) => {
       body.id = crypto.randomUUID();
       req.movies.push(body);
       writeToFile(req.movies);
-      req.writeHead(201, { "Content-Type": "application/json" });
+      res.writeHead(201, { "Content-Type": "application/json" });
       res.end();
-      console.log("Request Body: ", body);
     } catch (err) {
       console.log(err);
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -21,9 +20,8 @@ module.exports = async (req, res) => {
         })
       );
     }
-  }
-  else {
-    res.write(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ title: "Not found", message: "Route not found" }));
+  } else {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ title: "Not Found", message: "Route not found" }));
   }
 };
